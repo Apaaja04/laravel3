@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('mejas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_user')->constrained('users')->cascadeonDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();  // Gunakan user_id agar lebih konsisten
             $table->integer('kode_meja');
-            $table->enum('ststus_pemesanan', ['tersedia', 'dipesan']);
-            $table->softDeldetes();
-            $table->timestamps(); 
+            $table->enum('status_pemesanan', ['tersedia', 'dipesan'])->default('tersedia'); // Menambahkan default value
+            $table->softDeletes(); // Perbaikan penulisan softDeletes()
+            $table->timestamps();
+            
         });
     }
 
@@ -29,3 +30,4 @@ return new class extends Migration
         Schema::dropIfExists('mejas');
     }
 };
+

@@ -3,82 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Meja</title>
+    <title>Reservasi Meja</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #A0522D;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 600px;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        h1 {
             text-align: center;
-            color: black;
+            margin: 0;
+            padding: 20px;
         }
-
-        .reservasi-info {
-            margin-bottom: 20px;
-            font-style: italic;
-            font-weight: bold;
-        }
-
-        label, select, button {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: none;
+        .container {
+            background-color: white;
+            padding: 20px;
             border-radius: 10px;
+            display: inline-block;
+        }
+        .header {
+            font-weight: bold;
+            font-style: italic;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .meja {
+            display: inline-block;
+            width: 200px;
             background-color: #A0522D;
             color: white;
-            font-size: 16px;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 5px;
+            text-align: center;
         }
-
-        button {
-            cursor: pointer;
-            text-transform: uppercase;
+        .meja p {
+            font-style: italic;
             font-weight: bold;
+            margin: 5px 0;
         }
-
-        button:hover {
-            background-color: #8B4513;
+        .btn {
+            display: block;
+            background-color: white;
+            color: black;
+            font-style: italic;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 10px auto 0;
+            width: 80%;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Pilih Meja</h1>
-
-        <div class="reservasi-info">
-            <p>Reservasi oleh: {{ $reservasi->nama_lengkap }}</p>
-            <p>Tanggal Reservasi: {{ $reservasi->tanggal_reservasi }}</p>
-            <p>Jumlah Orang: {{ $reservasi->jumlah_orang }}</p>
-        </div>
-
+        <div class="header">Reservasi Meja</div>
+        
         <form action="{{ route('meja.store') }}" method="POST">
             @csrf
-            <label for="meja">Pilih Meja</label>
-            <select name="meja" id="meja" required>
-                @foreach ($mejas as $meja)
-                    <option value="{{ $meja->id }}">{{ $meja->kode_meja }}</option>
-                @endforeach
-            </select>
-
-            <button type="submit">Lanjutkan Pemesanan</button>
+            <div class="meja">
+                <p>Nomor Meja: 1</p>
+                <p>Max Person: 4</p>
+                <button type="submit" name="meja" value="1" class="btn">Reservasi</button>
+            </div>
+            
+            <div class="meja">
+                <p>Nomor Meja: 2</p>
+                <p>Max Person: 6</p>
+                <span class="btn">Meja 2 telah direservasi</span>
+            </div>
+            
+            <div class="meja">
+                <p>Nomor Meja: 3</p>
+                <p>Max Person: 6</p>
+                <span class="btn">Meja 3 telah direservasi</span>
+            </div>
+            
+            <div class="meja">
+                <p>Nomor Meja: 4</p>
+                <p>Max Person: 4</p>
+                <span class="btn">Meja 4 telah direservasi</span>
+            </div>
+            
+            <div class="meja">
+                <p>Nomor Meja: 5</p>
+                <p>Max Person: 6</p>
+                <button type="submit" name="meja" value="5" class="btn">Reservasi</button>
+            </div>
+            
+            <div class="meja">
+                <p>Nomor Meja: 6</p>
+                <p>Max Person: 6</p>
+                <button type="submit" name="meja" value="6" class="btn">Reservasi</button>
+            </div>
         </form>
     </div>
 </body>

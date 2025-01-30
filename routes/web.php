@@ -26,27 +26,29 @@ Route::get('/', [HomeController ::class, 'index']);
   //  Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 
-Route::middleware('auth')->group(function () {
-    Route::get('/reservasi', [ReservasiController::class, 'tampilForm'])->name('reservasi.form');
-    Route::post('/form/submit', [ReservasiController::class, 'submitForm'])->name('form.submit');
-});
-
-Route::get('/reservasi/meja', [MejaController::class, 'meja'])->name('reservasi.meja');
-
-// Rute untuk menyimpan pemilihan meja
-Route::post('/reservasi', [MejaController::class, 'store'])->name('meja.store');
-
-// Resource Routes untuk Menu, Pemesanan, dan Transaksi
-Route::resource('menus', MenuController::class);
-Route::resource('pemesanans', PemesananController::class);
-Route::resource('transaksis', TransaksiController::class);
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return redirect()->route('reservasi.form');
     })->name('dashboard');
+
+    Route::get('/reservasi', [ReservasiController::class, 'tampilForm'])->name('reservasi.form');
+    Route::post('/form/submit', [ReservasiController::class, 'submitForm'])->name('form.submit');
+
+    Route::get('/meja/{id}', [MejaController::class, 'meja'])->name('reservasi.meja');
+    // Rute untuk menyimpan pemilihan meja
+    Route::post('/reservasi', [MejaController::class, 'store'])->name('meja.store');
+
+    Route::get('/menu/{id}', [MenuController::class, 'menu'])->name('reservasi.menu');
+
+    // Menyimpan pesanan menu
+    Route::post('/menu', [MenuController::class, 'store'])->name('menu.store');
+
+
+    Route::resource('pemesanans', PemesananController::class);
+    Route::resource('transaksis', TransaksiController::class);
+
 });

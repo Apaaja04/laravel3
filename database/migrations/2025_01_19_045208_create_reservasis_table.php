@@ -11,19 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reservasis', function (Blueprint $table) {
-            $table->id();
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('set null');
-            $table->string('nama_lengkap');
-            $table->date('tanggal_reservasi');
-            $table->time('waktu_reservasi');
-            $table->integer('jumlah_orang');
-            $table->text('catatan_tambahan')->nullable();
-            $table->softDeletes();
-            $table->timestamps();
-        });
-
-      
+        if (!Schema::hasTable('reservasis')) { // Cek apakah tabel sudah ada sebelum dibuat
+            Schema::create('reservasis', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('id_user')->nullable()->constrained('users')->nullOnDelete();
+                $table->string('nama_lengkap');
+                $table->date('tanggal_reservasi');
+                $table->time('waktu_reservasi');
+                $table->integer('jumlah_orang');
+                $table->text('catatan_tambahan')->nullable();
+                $table->softDeletes();
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -31,8 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('reservasis', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_user')->nullable(false)->change(); // Kembalikan ke NOT NULL jika rollback
-        });
+        Schema::dropIfExists('reservasis'); // Hapus tabel saat rollback
     }
 };

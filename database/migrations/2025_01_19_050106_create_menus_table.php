@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_user')->constrained('users')->cascadeonDelete();
-            $table->varchar('nama_menu');
-            $table->decimal('harga', 10,3);
-            $table->varchar('jenis_makanan');
-            $table->image('foto');
-            $table->softDeldetes();
+            $table->foreignId('id_user')->constrained('users')->cascadeOnDelete(); // Pastikan foreign key benar
+            $table->string('nama_menu'); // Menggunakan string untuk varchar
+            $table->decimal('harga', 10, 3);
+            $table->string('jenis_makanan'); // Menggunakan string untuk varchar
+            $table->string('foto'); // Menggunakan string untuk menyimpan path gambar
+            $table->softDeletes(); // Perbaiki typo softDeletes()
             $table->timestamps(); 
         });
     }
